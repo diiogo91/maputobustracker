@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/buttonTextColor"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/rsz_1bustracker"
+        android:id="@+id/imageView3"
+        android:layout_weight="0.20" />
+
+    <TextView
+        android:text="Maputo BusTracker  surgiu no âmbito do projecto final do curso de Licenciatura em Engenharia Informática e de Telecomunicações, no ISUTC , elaborado pelo candidato Diogo Rogério Amaral, cujo o tema é :\n DESENVOLVIMENTO DE UMA APLICAÇÃO ANDROID PARA LOCALIZAÇÃO DE TRANSPORTES PÚBLICOS COLECTIVOS NO MUNICÍPIO DE MAPUTO. \n Maputo, 2017"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView17"
+        android:layout_weight="0.20"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false" />
+
+</LinearLayout>

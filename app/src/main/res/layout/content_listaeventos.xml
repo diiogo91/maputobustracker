@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:focusable="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/ivSliderArrow"
+            android:layout_height="54dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/accept"
+            android:background="@mipmap/notification"
+            android:layout_width="60dp"
+            android:layout_marginStart="19dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Notificações de Eventos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNotificationslbl"
+            tools:text="Notificações de Eventos"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textAlignment="center"
+            android:fontFamily="monospace"
+            android:textColor="@color/cardview_dark_background"
+            android:textStyle="normal|bold"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:background="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/ivSliderArrow"
+            android:layout_marginStart="11dp" />
+
+    </RelativeLayout>
+
+    <ListView
+
+        android:cacheColorHint="@android:color/white"
+        android:drawSelectorOnTop="true"
+        android:id="@+id/listaNotificacoes"
+        android:divider="@android:color/darker_gray"
+        android:background="@android:color/background_light"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txtNotificationslbl"
+        android:smoothScrollbar="true"
+        android:layout_marginTop="0dp"
+        android:entries="@array/teste"
+        android:backgroundTint="@color/cardview_light_background" />
+
+</LinearLayout>

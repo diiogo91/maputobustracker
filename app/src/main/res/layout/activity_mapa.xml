@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MapsActivity">
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    >
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Entrar no modo de Navegação"
+            android:id="@+id/btnObterDirecoes"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:theme="@style/btngreen"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        >
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:text=""
+            android:background="@android:color/transparent"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:id="@+id/btnNotfCount"
+            android:textColor="#000"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <ProgressBar
+android:layout_alignParentBottom="true"
+android:layout_centerHorizontal="true"
+android:id="@+id/maps_progress"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginBottom="8dp"
+android:visibility="gone" />
+
+</fragment>
+
+</RelativeLayout>

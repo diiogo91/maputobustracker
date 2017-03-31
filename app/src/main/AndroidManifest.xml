@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="mz.maputobustracker" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- To auto-complete the email text field in the login form with the utente's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.javapapers.android.maps.path.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/rsz_1bustracker"
+        android:label="Maputo Bus Tracker"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:replace="android:theme" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.LoginActionbar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ResetActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RotaActivity" />
+        <activity android:name=".SelectedRotaActivity" />
+        <activity android:name=".MapsActivity" />
+        <activity
+            android:name=".acercaActivity"
+            android:label="Acerca da Aplicação" />
+        <activity
+            android:name=".LinkAccountsActivity"
+            android:label="@string/title_activity_link_accounts" />
+        <activity
+            android:name=".HistoricoActivity"
+            android:label="@string/title_activity_historico" />
+        <activity
+            android:name=".ChooseRotaActivity"
+            android:label="Escolher Rota" />
+        <activity
+            android:name=".ChooseItinerarioActivity"
+            android:label="Especificar Itinerario" />
+        <activity
+            android:name=".viagensInfoActivity"
+            android:label="@string/title_activity_viagens" />
+        <activity
+            android:name=".UpdateActivity"
+            android:label="@string/title_activity_update"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UpdateLoginActivity"
+            android:label="@string/title_activity_update_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UpdatePasswordActivity"
+            android:label="@string/title_activity_update_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RemoveUserActivity"
+            android:label="@string/title_activity_remove_user"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AccountDetailsActivity"
+            android:label="@string/title_activity_details_user"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3dc6b3f7c9b49dc77c730868b0ee3ee4530d9966" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDflvraodkhbj9_wV8kttvyLcBTMozL9rE" />
+    </application>
+
+</manifest>

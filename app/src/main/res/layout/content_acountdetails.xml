@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="mz.maputobustracker.AccountDetailsActivity"
+    tools:showIn="@layout/activity_acountsdetails">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="#ffffff">
+        <android.support.v7.widget.CardView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:elevation="12dp"
+            android:id="@+id/view2"
+            android:layout_gravity="center"
+            app:cardCornerRadius="90dp"
+            android:layout_centerHorizontal="true"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9">
+            <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:id="@+id/fotoUtilizador"
+                android:onClick="onSelectImageClick"
+                android:src="@mipmap/rsz_user"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+            </ImageView>
+        </android.support.v7.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nome do Utilizador:"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="55dp"
+            android:textColor="#b30a0a" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/txtNomeAc"
+            android:textColor="#2dad06"
+            android:layout_below="@+id/textView2"
+            android:layout_toEndOf="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Email:"
+            android:id="@+id/textView4"
+            android:textColor="#b30a0a"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/txtEmailAc"
+            android:textColor="#2dad06"
+            android:layout_below="@+id/textView6"
+            android:layout_alignStart="@+id/txtNomeAc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView6"
+            android:layout_below="@+id/txtNomeAc"
+            android:layout_toStartOf="@+id/txtEmailAc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView5"
+            android:layout_below="@+id/textView4"
+            android:layout_alignStart="@+id/txtEmailAc" />
+
+        <ProgressBar
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/acount_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</ScrollView>

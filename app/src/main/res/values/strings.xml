@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Maputo BusTracker</string>
+    <string name="title_activity_login">Maputo BusTracker</string>
+    <string name="title_activity_sign_up">Cadastro</string>
+    <string name="title_activity_selectrota">Rota</string>
+    <string name="title_activity_main">Menu Principal</string>
+    <!-- Strings related to login -->
+    <string name="prompt_name">Nome</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha</string>
+    <string name="prompt_new_password">Nova senha</string>
+    <string name="action_sign_in">Efectuar Login</string>
+    <string name="action_link">Associar Login convencional</string>
+    <string name="action_unlink">Desassociar Login convencional</string>
+    <string name="action_sign_in_facebook">Login com Facebook</string>
+    <string name="action_link_facebook">Associar Facebook login</string>
+    <string name="action_unlink_facebook">Desassociar Facebook login</string>
+    <string name="action_sign_in_google">Login com Google</string>
+    <string name="action_link_google">Associar Google login</string>
+    <string name="action_unlink_google">Desassociar Google login</string>
+    <string name="action_sign_in_twitter">Login com Twitter</string>
+    <string name="action_link_twitter">Associar Twitter login</string>
+    <string name="action_unlink_twitter">Desassociar Twitter login</string>
+    <string name="action_sign_in_github">Login com GitHub</string>
+    <string name="action_link_github">Associar GitHub login</string>
+    <string name="action_unlink_github">Desassociar GitHub login</string>
+    <string name="action_sign_up">Registrar</string>
+    <string name="action_sign_up_call">Registrar</string>
+    <string name="action_reset_call">Esqueceu a sua senha? Clique Aqui!</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="action_sign_up_short">Registro</string>
+    <string name="error_invalid_email">O endereço de email é inválido</string>
+    <string name="error_invalid_password">A password é demasiadamente curta</string>
+    <string name="error_incorrect_password">A password é incorrecta</string>
+    <string name="error_field_required">Este campo é obrigatório</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="update_profile">Atualizar Nome</string>
+    <string name="reset">Recuperar senha</string>
+    <string name="update_nome">Atualizar Nome</string>
+    <string name="update_login">Atualizar Email</string>
+    <string name="reset_bt_label">Iniciar recuperação acesso</string>
+    <string name="update_password">Atualizar Senha</string>
+    <string name="link_accounts">Associar Contas </string>
+    <string name="remove_user">Remover Conta</string>
+    <string name="details_user">Detalhes da Conta</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_update">Actualizar Nome</string>
+    <string name="title_activity_update_login">Actualizar Email</string>
+    <string name="title_activity_update_password">Actualizar Senha</string>
+    <string name="title_activity_link_accounts">Associar contas</string>
+    <string name="title_activity_historico">Histórico de Itinerarios</string>
+    <string name="title_activity_viagens">Viagens de Autocarros</string>
+    <string name="title_activity_remove_user">Remover Utilizador</string>
+    <string name="title_activity_details_user">Detalhes da Conta</string>
+    <string name="password_info">Para prosseguir com a atualização informe abaixo sua senha.</string>
+
+    <string name="facebook_app_id">1059391377477906</string>
+
+   <string-array name="teste">
+    <item>Sem notificações</item>
+</string-array>
+
+    <string-array name="itinerarios">
+        <item>Baixa</item>
+        <item>Rotunda Toyota Moç</item>
+        <item>Hospital J.M</item>
+        <item>Brigada Montada</item>
+        <item>Jardim</item>
+        <item>Bairro 25 de Junho</item>
+        <item>Benfica</item>
+        <item>Bagamoio</item>
+        <item>Zimpeto Mercado</item>
+        <item>Terminar Estádio Zimpeto </item>
+    </string-array>
+</resources>

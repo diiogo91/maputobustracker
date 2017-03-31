@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".viagensInfoActivity"
+    tools:showIn="@layout/activity_viageminfo"
+    android:fillViewport="true"
+    android:weightSum="1">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Informação sobre Viagens de Autocarros"
+            android:background="#ffc"
+            android:id="@+id/textView11"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView16" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Filtrar por paragem:"
+        android:id="@+id/textView13"
+        android:background="#ffc" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spPontos"
+        android:layout_below="@+id/textView12"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="inherit" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp">
+
+        <Button
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:text="Filtrar"
+            android:onClick="filtarViagem"
+            android:id="@+id/btnFiltrar"
+            android:theme="@style/btnyellow"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Redefinir"
+            android:onClick="resetarViagem"
+            android:id="@+id/btnReset"
+            android:theme="@style/btnRed"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/btnFiltrar" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nº de Autocarros a caminho:"
+        android:id="@+id/txtNumerosAutocarros"
+        android:textSize="15dp"
+        android:background="#ffc"
+        android:visibility="invisible" />
+
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="368dp"
+            android:id="@+id/lstViagens"
+            android:choiceMode="singleChoice"
+            android:layout_below="@+id/textView11"
+            android:layout_alignParentBottom="true" />
+
+        <ProgressBar
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/maps_viageminfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+    </LinearLayout>

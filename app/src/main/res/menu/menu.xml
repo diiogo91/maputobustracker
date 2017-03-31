@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mz.maputobustracker.MainActivity">
+    <item
+        android:id="@+id/action_details_user"
+        android:orderInCategory="100"
+        android:title="@string/details_user"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_update"
+        android:orderInCategory="100"
+        android:title="@string/update_profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_update_login"
+        android:orderInCategory="100"
+        android:title="@string/update_login"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_update_password"
+        android:orderInCategory="100"
+        android:title="@string/update_password"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_link_accounts"
+        android:orderInCategory="100"
+        android:title="@string/link_accounts"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_remove_user"
+        android:orderInCategory="100"
+        android:title="@string/remove_user"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+</menu>

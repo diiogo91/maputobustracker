@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_x="0dp"
+        android:layout_y="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/badge"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/rsz_1bustracker"
+                android:layout_alignWithParentIfMissing="false"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true">
+            </ImageView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/linearLayout"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/badge">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#ff000000"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="text"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/badge" />
+
+                <TextView
+                    android:id="@+id/snippet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dgts__text_dark"
+                    android:textSize="14dp"
+                    android:layout_toEndOf="@+id/badge"
+                    android:text="text" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </FrameLayout>
