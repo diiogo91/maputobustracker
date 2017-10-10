@@ -112,7 +112,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Obter Rota"
+                android:text="Visualizar Itinerário no Mapa"
                 android:onClick="callMapWithRoute"
                 android:id="@+id/btnObterRota"
                 android:theme="@style/btnblue"

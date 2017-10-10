@@ -67,7 +67,7 @@ import mz.maputobustracker.domain.util.AppLocationService;
 import mz.maputobustracker.domain.Autocarro;
 import mz.maputobustracker.domain.Historico;
 import mz.maputobustracker.domain.util.LocationAddress;
-import mz.maputobustracker.domain.LocationU;
+import mz.maputobustracker.domain.Localizacao;
 import mz.maputobustracker.domain.Ponto;
 import mz.maputobustracker.domain.Rota;
 import mz.maputobustracker.domain.Viagem;
@@ -102,7 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Double distanciaMaxima;
     private Double distanciaminima;
     private Double tempoEstimado;
-    private LocationU locationU;
+    private Localizacao localizacao;
     private ArrayList<String> rotasId;
     private boolean isPontoProximoCheck;
     private ArrayList<Ponto> listaParagens = new ArrayList<Ponto>();
@@ -184,12 +184,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(ut != null)
         {
             nomeUtilizador = ut.getName();
-            locationU = new LocationU();
-            locationU.setIdUtilizador(ut.getId());
-            locationU.setIdDispositivo(getIMEI());
-            locationU.setLatitude(defaultLocation.latitude);
-            locationU.setLongitude(defaultLocation.longitude);
-            //    LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(locationU);
+            localizacao = new Localizacao();
+            localizacao.setIdUtilizador(ut.getId());
+            localizacao.setIdDispositivo(getIMEI());
+            localizacao.setLatitude(defaultLocation.latitude);
+            localizacao.setLongitude(defaultLocation.longitude);
+            //    LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(localizacao);
         }
 
         sliderImage = (ImageView)findViewById(R.id.ivSliderArrow);
@@ -264,7 +264,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                                 Locale pt = new Locale("pt" , "PT");
-                                String uri = String.format(pt,"http://maps.google.com/maps?saddr="+locationU.getLatitude()+","+locationU.getLongitude()+"&daddr="+destino.latitude+","+destino.longitude+"&mode=walking&sensor=false");
+                                String uri = String.format(pt,"http://maps.google.com/maps?saddr="+ localizacao.getLatitude()+","+ localizacao.getLongitude()+"&daddr="+destino.latitude+","+destino.longitude+"&mode=walking&sensor=false");
                                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
                                 intent.setPackage("com.google.android.apps.maps");
                                 startActivity(intent);
@@ -370,7 +370,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationU.getLatLang(), INITIAL_ZOOM_LEVEL));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacao.getLatLang(), INITIAL_ZOOM_LEVEL));
                 return true;
             }
         });
@@ -496,14 +496,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             alert.show();
                         } else
                         {
-                            locationU.setLatitude(location.getLatitude());
-                            locationU.setLongitude(location.getLongitude());
+                            localizacao.setLatitude(location.getLatitude());
+                            localizacao.setLongitude(location.getLongitude());
                             LocationAddress locationAddress = new LocationAddress();
-                            locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+                            locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                                     getApplicationContext(), new GeocoderHandler());
-                            //LibraryClass.getFirebase().child("Localizacoes").child(getIMEI() + ut.getId()).setValue(locationU);
+                            //LibraryClass.getFirebase().child("Localizacoes").child(getIMEI() + ut.getId()).setValue(localizacao);
                             user.remove();
-                            user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                            user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                                     .snippet("Minha Localização Actual: " + endereco)
                                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
                             mMap.animateCamera(CameraUpdateFactory.newLatLng(user.getPosition()));
@@ -524,7 +524,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 mapaCirculos.put(post.getId(), searchCircle);
                             }
                             getNearstLocationMarker();
-                            user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                            user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                                     .snippet("Minha Localização Actual: " + endereco)
                                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), INITIAL_ZOOM_LEVEL));
@@ -586,13 +586,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     // TODO Auto-generated method stub
                     if(arg0.getId().equals(user.getId())){
                         Log.d("System out", "onMarkerDragEnd..."+arg0.getPosition().latitude+"..."+arg0.getPosition().longitude);
-                        locationU.setLatitude(arg0.getPosition().latitude);
-                        locationU.setLongitude(arg0.getPosition().longitude);
-                        locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+                        localizacao.setLatitude(arg0.getPosition().latitude);
+                        localizacao.setLongitude(arg0.getPosition().longitude);
+                        locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                                 getApplicationContext(), new GeocoderHandler());
-                        LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(locationU);
+                        LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(localizacao);
                         user.remove();
-                        user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                        user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                                 .snippet("Minha Localizacao Actual: "+endereco)
                                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(arg0.getPosition()));
@@ -683,29 +683,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LibraryClass.getFirebase().child("Localizacoes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                LocationU post = null;
+                Localizacao post = null;
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    post = postSnapshot.getValue(LocationU.class);
+                    post = postSnapshot.getValue(Localizacao.class);
                     System.out.println("POST READ>"+post.getIdDispositivo());
                     if(post.getIdDispositivo().equals(getIMEI()) && post.getIdUtilizador().equals(ut.getId()))
                     {
-                        locationU.setLatitude(post.getLatitude());
-                        locationU.setLongitude(post.getLongitude());
-                        locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+                        localizacao.setLatitude(post.getLatitude());
+                        localizacao.setLongitude(post.getLongitude());
+                        locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                                 getApplicationContext(), new GeocoderHandler());
-                        user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                        user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                                 .snippet("Minha Localizacao Actual: "+endereco)
                                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
                     }
                 }
                 if(user ==null)
                 {
-                    locationU.setLatitude(defaultLocation.latitude);
-                    locationU.setLongitude(defaultLocation.longitude);
-                    locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+                    localizacao.setLatitude(defaultLocation.latitude);
+                    localizacao.setLongitude(defaultLocation.longitude);
+                    locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                             getApplicationContext(), new GeocoderHandler());
-                    LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(locationU);
-                    user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                    LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(localizacao);
+                    user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                             .snippet("Minha Localizacao Actual: "+endereco)
                             .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
                 }
@@ -726,34 +726,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LibraryClass.getFirebase().child("Localizacoes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                LocationU post = null;
+                Localizacao post = null;
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    post = postSnapshot.getValue(LocationU.class);
+                    post = postSnapshot.getValue(Localizacao.class);
                     System.out.println("POST READ>"+post.getIdDispositivo());
                     if(post.getIdDispositivo().equals(getIMEI()) && post.getIdUtilizador().equals(ut.getId()))
                     {
-                        locationU.setLatitude(post.getLatitude());
-                        locationU.setLongitude(post.getLongitude());
-                        locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+                        localizacao.setLatitude(post.getLatitude());
+                        localizacao.setLongitude(post.getLongitude());
+                        locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                                 getApplicationContext(), new GeocoderHandler());
-                        user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                        user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                                 .snippet("Minha Localizacao Actual: "+endereco)
                                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationU.getLatLang(), INITIAL_ZOOM_LEVEL));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacao.getLatLang(), INITIAL_ZOOM_LEVEL));
                         getNearstLocationMarker();
                     }
                 }
                 if(user ==null)
                 {
-                    locationU.setLatitude(defaultLocation.latitude);
-                    locationU.setLongitude(defaultLocation.longitude);
-                    locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+                    localizacao.setLatitude(defaultLocation.latitude);
+                    localizacao.setLongitude(defaultLocation.longitude);
+                    locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                             getApplicationContext(), new GeocoderHandler());
-                    LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(locationU);
-                    user = mMap.addMarker(new MarkerOptions().position(locationU.getLatLang()).title(nomeUtilizador).draggable(true)
+                    LibraryClass.getFirebase().child("Localizacoes").child(getIMEI()+ut.getId()).setValue(localizacao);
+                    user = mMap.addMarker(new MarkerOptions().position(localizacao.getLatLang()).title(nomeUtilizador).draggable(true)
                             .snippet("Minha Localizacao Actual: "+endereco)
                             .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person2)));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationU.getLatLang(), INITIAL_ZOOM_LEVEL));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacao.getLatLang(), INITIAL_ZOOM_LEVEL));
                     getNearstLocationMarker();
                 }
             }
@@ -834,6 +834,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Viagem post = dataSnapshot.getValue(Viagem.class);
                     viagens.add(post);
                     if (mapaParagens.containsKey(post.getCod_anteriorParagem()) && mapaParagens.containsKey(post.getCod_proximaParagem())) {
+
+                        if(post.getDisponibilidade() == false)
+                        {
+                            copyList = listaNot;
+                            listaNot = new ArrayList<String>();
+                            Date finaldate = new Date();
+                            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+                            String datenc = DATE_FORMAT.format(finaldate);
+                            String not= "Data: "+ datenc +"\n"
+                                    +"Mensagem:"+"\n"+post.getInfoDisponibilidade();
+                            listaNot.add(not);
+                            listaNot.addAll(copyList);
+                            badge_corner .setText(listaNot.size()+"");
+                            mapaAutocarros.get(post.getCod_autocarro()).hideInfoWindow();
+                            mapaAutocarros.get(post.getCod_autocarro()).setSnippet(post.getDataHora()+": "+post.getInfoDisponibilidade());
+                            mapaAutocarros.get(post.getCod_autocarro()).showInfoWindow();
+                            if (listaNotificacoes != null) {
+                                listaNotificacoes.setAdapter(new CustomArrayAdapterNot(MapsActivity.this, android.R.layout.simple_list_item_1, listaNot));
+                            }
+                        }
+
                         if (post != null && mapaParagens.get(post.getCod_proximaParagem()) != null && mapaAutocarros.get(post.getCod_autocarro()) != null) {
                             listaNotificacoes = (ListView) findViewById(R.id.listaNotificacoes);
                             LatLng newPosition = new LatLng(post.getLatitude(), post.getLongitude());
@@ -849,7 +870,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 listaNot = new ArrayList<String>();
                                 Date finaldate = new Date();
                                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-                                final String datenc = DATE_FORMAT.format(finaldate);
+                                String datenc = DATE_FORMAT.format(finaldate);
                                 String not= "Data: "+ datenc +"\n"
                                         +"Mensagem:"+"\nO " + post.getDescricao() + " está a deslocar-se em direção a " + post.getProximaParagem();
                                 listaNot.add(not);
@@ -862,7 +883,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 notificado = true;
                                 notif = false;
                                 mapaAutocarros.get(post.getCod_autocarro()).showInfoWindow();
-
                             }
                             else if (post.getChegouDestino() == true && chegou == false && notif == false) {
                                 System.out.println("PROXIMA PARAGEM>" + post.getCod_proximaParagem());
@@ -872,7 +892,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 listaNot = new ArrayList<String>();
                                 Date finaldate = new Date();
                                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-                                final String datenc = DATE_FORMAT.format(finaldate);
+                                String datenc = DATE_FORMAT.format(finaldate);
                                 String not= "Data: "+ datenc +"\n"
                                         +"Mensagem:"+"\nO " + post.getDescricao() + " acaba de chegar a " + post.getProximaParagem();
                                 listaNot.add(not);
@@ -894,7 +914,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 listaNot = new ArrayList<String>();
                                 Date finaldate = new Date();
                                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-                                final String datenc = DATE_FORMAT.format(finaldate);
+                                String datenc = DATE_FORMAT.format(finaldate);
                                 String not= "Data: "+ datenc +"\n"
                                         +"Mensagem:"+"\nO " + post.getDescricao() + " acaba de sair da paragem " + post.getAnteriorParagem();
                                 listaNot.add(not);
@@ -904,6 +924,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     System.out.println("ENTROU NO SET");
                                     listaNotificacoes.setAdapter(new CustomArrayAdapterNot(MapsActivity.this, android.R.layout.simple_list_item_1, listaNot));
                                 }
+
                             }
 
                         } else {
@@ -919,7 +940,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 listaNot = new ArrayList<String>();
                                 Date finaldate = new Date();
                                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-                                final String datenc = DATE_FORMAT.format(finaldate);
+                                String datenc = DATE_FORMAT.format(finaldate);
                                 String not= "Data: "+ datenc +"\n"
                                         +"Mensagem:"+"\nO " + post.getDescricao() + " passou da " + post.getAnteriorParagem() + " em direção a " + post.getProximaParagem();
                                 listaNot.add(not);
@@ -939,7 +960,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 listaNot = new ArrayList<String>();
                                 Date finaldate = new Date();
                                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-                                final String datenc = DATE_FORMAT.format(finaldate);
+                                String datenc = DATE_FORMAT.format(finaldate);
                                 String not= "Data: "+ datenc +"\n"
                                         +"Mensagem:"+"\nO" + post.getDescricao() + " chegou ao destino " + post.getProximaParagem();
                                 listaNot.add(not);
@@ -952,12 +973,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 chegou = true;
                             }
                         }
+
                     }else
                     {   if(mapaParagens.get(post.getCod_anteriorParagem()) != null){
                         mapaParagens.get(post.getCod_anteriorParagem()).hideInfoWindow();}
                         //mapaAutocarros.get(post.getCod_autocarro()).remove();
                     }
                 }
+
             }
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -985,7 +1008,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (int i = 0; i < m.size(); i++) {
             //Double distancia = distanceFrom(currentlat.doubleValue(),currentlong.doubleValue(),m.get(i).getLatitude(), m.get(i).getLongitude());
             LatLng destino = new LatLng(m.get(i).getLatitude(), m.get(i).getLongitude());
-            Double distancia = CalculationByDistance(locationU.getLatLang(),destino);
+            Double distancia = CalculationByDistance(localizacao.getLatLang(),destino);
             if (i == 0) menor = distancia;
             else if (distancia < menor ) {
                 menor = distancia;
@@ -995,11 +1018,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         pontoMaixProximo = listaParagens.get(pos);
         points = new ArrayList<>(2);
         destino = new LatLng(pontoMaixProximo.getLatitude(), pontoMaixProximo.getLongitude());
-        points.add(locationU.getLatLang());
-        locationAddress.getAddressFromLocation(locationU.getLatitude(), locationU.getLongitude(),
+        points.add(localizacao.getLatLang());
+        locationAddress.getAddressFromLocation(localizacao.getLatitude(), localizacao.getLongitude(),
                 getApplicationContext(), new GeocoderHandler());
         points.add(destino);
-        searchCircle = mMap.addCircle(new CircleOptions().center(locationU.getLatLang()).radius(15));
+        searchCircle = mMap.addCircle(new CircleOptions().center(localizacao.getLatLang()).radius(15));
         searchCircle.setFillColor(Color.argb(66, 255, 0, 255));
         searchCircle.setStrokeColor(Color.argb(66, 0, 0, 0));
         searchCircle2 = mMap.addCircle(new CircleOptions().center(destino).radius(10));
@@ -1011,7 +1034,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         progressBar = (ProgressBar) findViewById(R.id.maps_progress);
 
         PolylineOptions rectOptions = new PolylineOptions()
-                .add(locationU.getLatLang())
+                .add(localizacao.getLatLang())
                 .add(destino)
                 .width(8)
                 .color(Color.RED)
@@ -1245,7 +1268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void callGoogleMaps(View view)
     {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps?saddr="+locationU.getLatitude()+","+locationU.getLongitude()+"&daddr="+destino.latitude+","+destino.longitude));
+                Uri.parse("http://maps.google.com/maps?saddr="+ localizacao.getLatitude()+","+ localizacao.getLongitude()+"&daddr="+destino.latitude+","+destino.longitude));
         intent.setPackage("com.google.android.apps.maps");
         startActivity(intent);
     }

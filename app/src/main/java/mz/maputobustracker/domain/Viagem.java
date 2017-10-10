@@ -3,7 +3,7 @@ package mz.maputobustracker.domain;
 import java.io.Serializable;
 
 /**
- * Created by Hawkingg on 28/08/2016.
+ * Created by Diogo Amaral on 28/08/2016.
  */
 public class Viagem implements Serializable, Comparable<Viagem> {
 
@@ -23,6 +23,9 @@ public class Viagem implements Serializable, Comparable<Viagem> {
     private String kmpercorridos;
     private String kmapercorrer;
     private Double tempoReal;
+    private Boolean disponibilidade;
+    private String infoDisponibilidade;
+    private String dataHora;
 
     public String getKmpercorridos() {
         return kmpercorridos;
@@ -40,7 +43,21 @@ public class Viagem implements Serializable, Comparable<Viagem> {
         this.kmapercorrer = kmapercorrer;
     }
 
+    public Boolean getDisponibilidade() {
+        return disponibilidade;
+    }
 
+    public void setDisponibilidade(Boolean disponibilidade) {
+        this.disponibilidade = disponibilidade;
+    }
+
+    public String getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
+    }
     public Double getTempoReal() {
         return tempoReal;
     }
@@ -105,6 +122,14 @@ public class Viagem implements Serializable, Comparable<Viagem> {
         this.cod_anteriorParagem = cod_anteriorParagem;
     }
 
+    public String getInfoDisponibilidade() {
+        return infoDisponibilidade;
+    }
+
+    public void setInfoDisponibilidade(String infoDisponibilidade) {
+        this.infoDisponibilidade = infoDisponibilidade;
+    }
+
     public String getAnteriorParagem() {
         return anteriorParagem;
     }
@@ -157,14 +182,14 @@ public class Viagem implements Serializable, Comparable<Viagem> {
     public String toString() {
         return "O "+getDescricao()
                 +" está a deslocar-se em direção a "+ getProximaParagem()+
-                " a uma velocidade estimada de "+getVelocidade()
+                " a velocidade de "+getVelocidade()
                 +" com o tempo estimado de chegada "+getTempoEstChgada()+".\n"
                 +"Latitude: "+getLatitude()+" - Longitude: "+getLongitude();
     }
     public String toString2() {
         return "O "+getDescricao()
                 +" está a deslocar-se em direção a "+ getProximaParagem()+
-                " a uma  velocidade estimada de "+getVelocidade()
+                " a velocidade de "+getVelocidade()
                 +" com o tempo estimado de chegada de menos de 1 minuto"+".\n"
                 +"Latitude: "+getLatitude()+" - Longitude: "+getLongitude();
     }
@@ -173,14 +198,14 @@ public class Viagem implements Serializable, Comparable<Viagem> {
     @Override
     public int compareTo(Viagem another) {
 
-            if(this.tempoReal < another.getTempoReal())
-            {
-                return  -1;
-            }
-            if(this.tempoReal >another.getTempoReal())
-            {
-                return  1;
-            }
+        if(this.tempoReal < another.getTempoReal())
+        {
+            return  -1;
+        }
+        if(this.tempoReal >another.getTempoReal())
+        {
+            return  1;
+        }
         return 0;
     }
 }

@@ -29,7 +29,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Itinerários da Rota"
+                android:text="Vizualizar Itinerário da Rota"
                 android:id="@+id/btnItinerario"
                 android:onClick="callItinerario"
                 android:textColor="#000000"

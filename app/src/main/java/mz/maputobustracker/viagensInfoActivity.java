@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,7 @@ public class viagensInfoActivity extends AppCompatActivity {
     private Snackbar snackbar;
     private boolean notificadoP = false;
     private TextView txtNumero;
+    private TextView txtNumeroIndisponiveis;
     private boolean firstTime = true;
     private boolean filtred = false;
     private Spinner spPontos;
@@ -56,8 +58,11 @@ public class viagensInfoActivity extends AppCompatActivity {
     private Button btnReset;
     private Ponto pntOgr;
     private ArrayList<Ponto> pontos;
+    private ArrayList<Viagem> indisponiveis = new  ArrayList<Viagem>();
     private Rota selectedRota;
     private Ponto filtredPoint;
+    private int countIndisponiveis =0;
+    CustomArrayAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,8 @@ public class viagensInfoActivity extends AppCompatActivity {
         ut= (Utente) intent.getSerializableExtra("utilizador");
         lista = (ListView) findViewById(R.id.lstViagens);
         txtNumero = (TextView) findViewById(R.id.txtNumerosAutocarros);
+        txtNumeroIndisponiveis = (TextView) findViewById(R.id.txtNumeroIndisponiveis);
+
         spPontos = (Spinner) findViewById(R.id.spPontos);
         pontos = new ArrayList<>();
         pntOgr = new Ponto();
@@ -84,6 +91,8 @@ public class viagensInfoActivity extends AppCompatActivity {
         rotaSelecionada = (Rota) intent.getSerializableExtra("RotaSelecionada");
         progressBar = (ProgressBar) findViewById(R.id.maps_viageminfo);
         formateList = new ArrayList<>();
+        adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
+        lista.setAdapter(adapter);
         LibraryClass.getFirebase().child("Paragens").child(selectedRota.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -130,22 +139,62 @@ public class viagensInfoActivity extends AppCompatActivity {
                         Viagem post = postSnapshot.getValue(Viagem.class);
                         if (post.getCod_rota().equalsIgnoreCase(rotaSelecionada.getId())) {
                             list.add(post);
+                            if(post.getDisponibilidade() == false)
+                            {
+                                countIndisponiveis=countIndisponiveis+1;
+                                indisponiveis.add(post);
+                            }
+                            else{
+                                for (Viagem viagem : list) {
+                                    if(viagem.getId().equals(post.getId())){
+                                        countIndisponiveis=countIndisponiveis-1;
+                                        if(countIndisponiveis < 0)
+                                        {
+                                            countIndisponiveis=0;
+                                        }
+                                        indisponiveis.remove(viagem);
+                                    }
+                                }
+                                }
                         }
                         System.out.println("----------Post:" + post.toString());
                     }
                 }
+                if(countIndisponiveis > 0 )
+                {
+                    txtNumeroIndisponiveis.setBackgroundColor(Color.RED);
+                }else
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        txtNumeroIndisponiveis.setBackgroundColor(getColor(R.color.amarelo));
+                    }
+                    else
+                    {
+                        txtNumeroIndisponiveis.setBackgroundColor(getResources().getColor(R.color.amarelo));
+                    }
+                }
+                txtNumeroIndisponiveis.setText("Nº de Autocarros Indisponíveis na rota: "+countIndisponiveis);
                 if (filtred == false) {
                     if (list.isEmpty()) {
                         progressDialog.dismiss();
                         lista.setAdapter(null);
                         notificado = false;
                         firstTime = true;
+                        countIndisponiveis =0;
                         txtNumero.setVisibility(View.INVISIBLE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            txtNumeroIndisponiveis.setBackgroundColor(getColor(R.color.amarelo));
+                        }
+                        else
+                        {
+                            txtNumeroIndisponiveis.setBackgroundColor(getResources().getColor(R.color.amarelo));
+                        }
                         snackbar=Snackbar.make(progressBar, "De momento não existem autocarros em viagem na rota selecionada", Snackbar.LENGTH_INDEFINITE);
                         View snackBarView = snackbar.getView();
                         snackBarView.setBackgroundColor(Color.parseColor("#f44336")); // snackbar background color
                         snackbar.setActionTextColor(Color.parseColor("#FFFFEE19")); // snackbar action text color
                         snackbar.show();
+                        txtNumeroIndisponiveis.setText("Nº de Autocarros Indisponíveis na rota: "+countIndisponiveis);
                     } else {
                         lista = (ListView) findViewById(R.id.lstViagens);
                         Collections.sort(list);
@@ -156,18 +205,7 @@ public class viagensInfoActivity extends AppCompatActivity {
                                 chegou = "Sim";
                                 text =
                                         "Descrição: " + vg.getDescricao() + "\n"
-                                                + "Origem: " + vg.getAnteriorParagem() + "\n"
-                                                + "Destino:" + vg.getProximaParagem() + "\n"
-                                                +  vg.getKmapercorrer()+"\n"
-                                                +  vg.getKmpercorridos()+"\n"
-                                                + "Chegou ao destino: " + chegou + "\n"
-                                                + "Latitude: " + vg.getLatitude() + "\n"
-                                                + "Longitude: " + vg.getLongitude() + "\n"
-                                                + "Velocidade: " + vg.getVelocidade() + "\n";
-                            } else {
-                                chegou = "Não";
-                                text =
-                                        "Descrição: " + vg.getDescricao() + "\n"
+                                                + "Data & Hora :"+vg.getDataHora()+"\n"
                                                 + "Origem: " + vg.getAnteriorParagem() + "\n"
                                                 + "Destino:" + vg.getProximaParagem() + "\n"
                                                 +  vg.getKmapercorrer()+"\n"
@@ -176,16 +214,34 @@ public class viagensInfoActivity extends AppCompatActivity {
                                                 + "Latitude: " + vg.getLatitude() + "\n"
                                                 + "Longitude: " + vg.getLongitude() + "\n"
                                                 + "Velocidade: " + vg.getVelocidade() + "\n"
+                                                + "Disponibilidade: "+vg.getInfoDisponibilidade() +"\n";
+                            } else {
+                                chegou = "Não";
+                                text =
+                                        "Descrição: " + vg.getDescricao() + "\n"
+                                                + "Data & Hora :"+vg.getDataHora()+"\n"
+                                                + "Origem: " + vg.getAnteriorParagem() + "\n"
+                                                + "Destino:" + vg.getProximaParagem() + "\n"
+                                                +  vg.getKmapercorrer()+"\n"
+                                                +  vg.getKmpercorridos()+"\n"
+                                                + "Chegou ao destino: " + chegou + "\n"
+                                                + "Latitude: " + vg.getLatitude() + "\n"
+                                                + "Longitude: " + vg.getLongitude() + "\n"
+                                                + "Velocidade: " + vg.getVelocidade() + "\n"
+                                                + "Disponibilidade: "+vg.getInfoDisponibilidade() +"\n"
                                                 + "Tempo Estimado de chegada: " + vg.getTempoEstChgada();
                             }
                             formateList.add(text);
                         }
                         if (lista != null) {
-                            final CustomArrayAdapter adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
-                            lista.setAdapter(adapter);
+                            adapter.clear();
+                            adapter.addAll(formateList);
+                            adapter.notifyDataSetChanged();
                             txtNumero.setText("Nº de Autocarros na rota:"+formateList.size());
                             txtNumero.setVisibility(View.VISIBLE);
                             if (notificado == false && firstTime == false) {
+                                adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
+                                lista.setAdapter(adapter);
                                 snackbar=Snackbar.make(progressBar, "Informação actualizada em tempo real", Snackbar.LENGTH_INDEFINITE);
                                 View snackBarView = snackbar.getView();
                                 snackBarView.setBackgroundColor(Color.parseColor("#ff21ab29")); // snackbar background color
@@ -225,6 +281,15 @@ public class viagensInfoActivity extends AppCompatActivity {
                             lista.setAdapter(null);
                             if(notificadoP ==false) {
                                 txtNumero.setVisibility(View.INVISIBLE);
+                                countIndisponiveis =0;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    txtNumeroIndisponiveis.setBackgroundColor(getColor(R.color.amarelo));
+                                }
+                                else
+                                {
+                                    txtNumeroIndisponiveis.setBackgroundColor(getResources().getColor(R.color.amarelo));
+                                }
+                                txtNumeroIndisponiveis.setText("Nº de Autocarros Indisponíveis na rota: "+countIndisponiveis);
                                 snackbar=Snackbar.make(progressBar, "De momento não existem autocarros em direção a paragem selecionada", Snackbar.LENGTH_INDEFINITE);
                                 View snackBarView = snackbar.getView();
                                 snackBarView.setBackgroundColor(Color.parseColor("#f44336")); // snackbar background color
@@ -234,6 +299,8 @@ public class viagensInfoActivity extends AppCompatActivity {
                             }
                         } else {
                             if(notificadoP==true) {
+                                adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
+                                lista.setAdapter(adapter);
                                 snackbar=Snackbar.make(progressBar, "Informação actualizada em tempo real", Snackbar.LENGTH_INDEFINITE);
                                 View snackBarView = snackbar.getView();
                                 snackBarView.setBackgroundColor(Color.parseColor("#ff21ab29")); // snackbar background color
@@ -251,30 +318,36 @@ public class viagensInfoActivity extends AppCompatActivity {
                                     chegou = "Sim";
                                     text =
                                             "Descrição: " + vg.getDescricao() + "\n"
-                                                    + "Origem: " + vg.getAnteriorParagem() + "\n"
-                                                    + "Destino:" + vg.getProximaParagem() + "\n"
-                                                    + "Chegou ao destino: " + chegou + "\n"
-                                                    + "Latitude: " + vg.getLatitude() + "\n"
-                                                    + "Longitude: " + vg.getLongitude() + "\n"
-                                                    + "Velocidade: " + vg.getVelocidade() + "\n";
-                                } else {
-                                    chegou = "Não";
-                                    text =
-                                            "Descrição: " + vg.getDescricao() + "\n"
+                                                    + "Data & Hora :"+vg.getDataHora()+"\n"
                                                     + "Origem: " + vg.getAnteriorParagem() + "\n"
                                                     + "Destino:" + vg.getProximaParagem() + "\n"
                                                     + "Chegou ao destino: " + chegou + "\n"
                                                     + "Latitude: " + vg.getLatitude() + "\n"
                                                     + "Longitude: " + vg.getLongitude() + "\n"
                                                     + "Velocidade: " + vg.getVelocidade() + "\n"
+                                                    + "Disponibilidade: "+vg.getInfoDisponibilidade() +"\n";
+                                } else {
+                                    chegou = "Não";
+                                    text =
+                                            "Descrição: " + vg.getDescricao() + "\n"
+                                                    + "Data & Hora :"+vg.getDataHora()+"\n"
+                                                    + "Origem: " + vg.getAnteriorParagem() + "\n"
+                                                    + "Destino:" + vg.getProximaParagem() + "\n"
+                                                    + "Chegou ao destino: " + chegou + "\n"
+                                                    + "Latitude: " + vg.getLatitude() + "\n"
+                                                    + "Longitude: " + vg.getLongitude() + "\n"
+                                                    + "Velocidade: " + vg.getVelocidade() + "\n"
+                                                    + "Disponibilidade: "+vg.getInfoDisponibilidade() +"\n"
                                                     + "Tempo Estimado de chegada: " + vg.getTempoEstChgada();
                                 }
                                 System.out.println(text);
                                 formateList.add(text);
                             }
                             if (lista != null) {
-                                final CustomArrayAdapter adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
-                                lista.setAdapter(adapter);
+                                adapter.clear();
+                                adapter.addAll(formateList);
+                                adapter.notifyDataSetChanged();
+
                                 txtNumero.setText("Nº de Autocarros a caminho da paragem:"+formateList.size());
                                 txtNumero.setVisibility(View.VISIBLE);
                                 runOnUiThread(new Runnable() {
@@ -317,6 +390,15 @@ public class viagensInfoActivity extends AppCompatActivity {
                 lista.setAdapter(null);
                 if(notificadoP ==false) {
                     txtNumero.setVisibility(View.INVISIBLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        txtNumeroIndisponiveis.setBackgroundColor(getColor(R.color.amarelo));
+                    }
+                    else
+                    {
+                        txtNumeroIndisponiveis.setBackgroundColor(getResources().getColor(R.color.amarelo));
+                    }
+                    txtNumeroIndisponiveis.setText("Nº de Autocarros Indisponíveis na rota: "+countIndisponiveis);
+                    countIndisponiveis =0;
                     snackbar=Snackbar.make(progressBar, "De momento não existem autocarros em direção a paragem selecionada", Snackbar.LENGTH_LONG);
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#f44336")); // snackbar background color
@@ -326,6 +408,8 @@ public class viagensInfoActivity extends AppCompatActivity {
                 }
             } else {
                 if(notificadoP==true) {
+                    adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
+                    lista.setAdapter(adapter);
                     snackbar=Snackbar.make(progressBar, "Informação actualizada em tempo real", Snackbar.LENGTH_LONG);
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#ff21ab29")); // snackbar background color
@@ -343,30 +427,36 @@ public class viagensInfoActivity extends AppCompatActivity {
                         chegou = "Sim";
                         text =
                                 "Descrição: " + vg.getDescricao() + "\n"
-                                        + "Origem: " + vg.getAnteriorParagem() + "\n"
-                                        + "Destino:" + vg.getProximaParagem() + "\n"
-                                        + "Chegou ao destino: " + chegou + "\n"
-                                        + "Latitude: " + vg.getLatitude() + "\n"
-                                        + "Longitude: " + vg.getLongitude() + "\n"
-                                        + "Velocidade: " + vg.getVelocidade() + "\n";
-                    } else {
-                        chegou = "Não";
-                        text =
-                                "Descrição: " + vg.getDescricao() + "\n"
+                                        + "Data & Hora :"+vg.getDataHora()+"\n"
                                         + "Origem: " + vg.getAnteriorParagem() + "\n"
                                         + "Destino:" + vg.getProximaParagem() + "\n"
                                         + "Chegou ao destino: " + chegou + "\n"
                                         + "Latitude: " + vg.getLatitude() + "\n"
                                         + "Longitude: " + vg.getLongitude() + "\n"
                                         + "Velocidade: " + vg.getVelocidade() + "\n"
+                                        + "Disponibilidade: "+vg.getInfoDisponibilidade() +"\n";
+                    } else {
+                        chegou = "Não";
+                        text =
+                                "Descrição: " + vg.getDescricao() + "\n"
+                                        + "Data & Hora :"+vg.getDataHora()+"\n"
+                                        + "Origem: " + vg.getAnteriorParagem() + "\n"
+                                        + "Destino:" + vg.getProximaParagem() + "\n"
+                                        + "Chegou ao destino: " + chegou + "\n"
+                                        + "Latitude: " + vg.getLatitude() + "\n"
+                                        + "Longitude: " + vg.getLongitude() + "\n"
+                                        + "Velocidade: " + vg.getVelocidade() + "\n"
+                                        + "Disponibilidade: "+vg.getInfoDisponibilidade() +"\n"
                                         + "Tempo Estimado de chegada: " + vg.getTempoEstChgada();
                     }
                     System.out.println(text);
                     formateList.add(text);
                 }
                 if (lista != null) {
-                    final CustomArrayAdapter adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
-                    lista.setAdapter(adapter);
+                    adapter.clear();
+                    adapter.addAll(formateList);
+                    adapter.notifyDataSetChanged();
+                    // fire the event
                     txtNumero.setText("Nº de Autocarros a caminho da paragem:"+formateList.size());
                     txtNumero.setVisibility(View.VISIBLE);
                     runOnUiThread(new Runnable() {
@@ -381,7 +471,7 @@ public class viagensInfoActivity extends AppCompatActivity {
         }
         else
         {
-               snackbar= Snackbar.make(progressBar, "Por favor especifique a paragem para a qual deseja filtar", Snackbar.LENGTH_INDEFINITE);
+            snackbar= Snackbar.make(progressBar, "Por favor especifique a paragem para a qual deseja filtar", Snackbar.LENGTH_INDEFINITE);
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#f44336")); // snackbar background color
             snackbar.setActionTextColor(Color.parseColor("#FFFFEE19")); // snackbar action text color
@@ -409,6 +499,14 @@ public class viagensInfoActivity extends AppCompatActivity {
             notificado = false;
             firstTime = true;
             txtNumero.setVisibility(View.INVISIBLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                txtNumeroIndisponiveis.setBackgroundColor(getColor(R.color.amarelo));
+            }
+            else
+            {
+                txtNumeroIndisponiveis.setBackgroundColor(getResources().getColor(R.color.amarelo));
+            }
+            txtNumeroIndisponiveis.setText("Nº de Autocarros Indisponíveis na rota: "+countIndisponiveis);
             snackbar=Snackbar.make(progressBar, "De momento não existem autocarros em viagem na rota selecionada", Snackbar.LENGTH_LONG);
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#f44336")); // snackbar background color
@@ -418,11 +516,16 @@ public class viagensInfoActivity extends AppCompatActivity {
             lista = (ListView) findViewById(R.id.lstViagens);
             Collections.sort(list);
             if (lista != null) {
-                final CustomArrayAdapter adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
                 lista.setAdapter(adapter);
+                adapter.clear();
+                adapter.addAll(formateList);
+                adapter.notifyDataSetChanged();
+
                 txtNumero.setText("Nº de Autocarros na rota:"+formateList.size());
                 txtNumero.setVisibility(View.VISIBLE);
                 if (notificado == false && firstTime == false) {
+                    adapter = new CustomArrayAdapter(viagensInfoActivity.this, android.R.layout.simple_list_item_1, formateList);
+                    lista.setAdapter(adapter);
                     snackbar=Snackbar.make(progressBar, "Informação actualizada em tempo real", Snackbar.LENGTH_LONG);
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#ff21ab29")); // snackbar background color

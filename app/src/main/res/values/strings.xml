@@ -36,12 +36,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="update_profile">Atualizar Nome</string>
+    <string name="update_profile">Actualizar Nome</string>
     <string name="reset">Recuperar senha</string>
-    <string name="update_nome">Atualizar Nome</string>
-    <string name="update_login">Atualizar Email</string>
+    <string name="update_nome">Actualizar Nome</string>
+    <string name="update_login">Actualizar Email</string>
     <string name="reset_bt_label">Iniciar recuperação acesso</string>
-    <string name="update_password">Atualizar Senha</string>
+    <string name="update_password">Actualizar Senha</string>
     <string name="link_accounts">Associar Contas </string>
     <string name="remove_user">Remover Conta</string>
     <string name="details_user">Detalhes da Conta</string>

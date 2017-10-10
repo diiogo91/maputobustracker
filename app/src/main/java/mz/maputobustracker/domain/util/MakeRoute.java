@@ -5,9 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,17 +22,13 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import mz.maputobustracker.MapsActivity;
-import mz.maputobustracker.R;
-import mz.maputobustracker.adapter.CustomArrayAdapterNot;
 
 /**
- * Created by Hawkingg on 28/06/2016.
+ * Created by Diogo Amaral on 28/06/2016.
  */
 public class MakeRoute {
     GoogleMap mMap;
@@ -89,7 +83,7 @@ public class MakeRoute {
         if(mode == null)
             mode = "driving";
 
-        urlString.append("http://maps.googleapis.com/maps/api/directions/json");
+        urlString.append("https://maps.googleapis.com/maps/api/directions/json");
         urlString.append("?origin=");// from
         urlString.append( points.get(0).latitude);
         urlString.append(',');
@@ -115,7 +109,7 @@ public class MakeRoute {
         }
 
 
-        urlString.append("&sensor=true&mode="+mode);
+        urlString.append("&sensor=true&mode="+mode+"&key=AIzaSyDflvraodkhbj9_wV8kttvyLcBTMozL9rE");
 
 
         return urlString.toString();
@@ -127,7 +121,7 @@ public class MakeRoute {
         if(mode == null)
             mode = "driving";
 
-        urlString.append("http://maps.googleapis.com/maps/api/directions/json");
+        urlString.append("https://maps.googleapis.com/maps/api/directions/json");
         urlString.append("?origin=");// from
         urlString.append(Double.toString(sourcelat));
         urlString.append(",");
@@ -138,7 +132,7 @@ public class MakeRoute {
                 .append(Double.toString( destlat));
         urlString.append(",");
         urlString.append(Double.toString( destlog));
-        urlString.append("&sensor=false&mode="+mode+"&alternatives=true&language="+lang);
+        urlString.append("&sensor=false&mode="+mode+"&alternatives=true&language="+lang+"&key=AIzaSyDflvraodkhbj9_wV8kttvyLcBTMozL9rE");
         return urlString.toString();
     }
 

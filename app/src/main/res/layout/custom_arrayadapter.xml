@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Informação ..."
+        android:textSize="12dp"
         android:id="@+id/txtInfo"
         android:textColor="@android:color/black"
        />

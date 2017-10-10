@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 /**
  * Created by Hawkingg on 07/09/2016.
  */
-public class LocationU {
+public class Localizacao {
 
     private String idUtilizador;
     private String idDispositivo;

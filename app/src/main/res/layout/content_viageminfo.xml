@@ -21,10 +21,25 @@
             android:gravity="center" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:text="Horário de Circulação dos Autocarros:"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView16" />
+        android:id="@+id/textView20"
+        android:background="@color/yellow" />
+
+    <TextView
+        android:text="Meio de Semana:  4:30 h às 22:30 h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView21"
+        android:background="@color/yellow" />
+
+    <TextView
+        android:text="Finais de Semana e Feriados: 5:30 h as 23:30 h "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView22"
+        android:background="@color/yellow" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,6 +47,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Filtrar por paragem:"
         android:id="@+id/textView13"
+        android:textSize="15dp"
         android:background="#ffc" />
 
     <Spinner
@@ -68,7 +84,15 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/btnFiltrar" />
     </RelativeLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nº de Autocarros Indisponíveis na rota: "
+        android:id="@+id/txtNumeroIndisponiveis"
+        android:textSize="15dp"
+        android:background="#ffc"
+        android:visibility="visible" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,15 +103,22 @@
         android:background="#ffc"
         android:visibility="invisible" />
 
+
     <ListView
-            android:layout_width="match_parent"
-            android:layout_height="368dp"
+            android:layout_width="wrap_content"
+            android:layout_height="310dp"
             android:id="@+id/lstViagens"
             android:choiceMode="singleChoice"
             android:layout_below="@+id/textView11"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            />
 
-        <ProgressBar
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/textView24"
+        android:layout_height="60dp" />
+
+    <ProgressBar
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:id="@+id/maps_viageminfo"
